@@ -1,0 +1,41 @@
+!!!
+%html
+  %head
+    %title Spectical
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application"
+
+    = csrf_meta_tags
+  %body
+    - unless params[:controller].match /^devise/
+      .container
+        .navbar
+          .navbar-inner
+            .container
+              %button.btn.btn-navbar{type:'button', 'data-toggle'=> 'collapse', 'data-target'=>'#nav-collapse-01'}
+              %a{href:root_path}
+                .logo
+              .nav-collapse.collapse#nav-collapse-01
+                %ul.nav
+                  <!-- Menu items go here -->
+                  %li
+                    =link_to 'Events', events_path
+                  %li
+                    =link_to 'Calendars', calendars_path
+                  %li
+                    =link_to 'Categories', categories_path
+                  %li
+                    =link_to 'Areas', areas_path
+                  %li
+                    =link_to 'Edit profile', edit_user_registration_path(current_user)
+                  %li
+                    =link_to 'Sign Out', destroy_user_session_path, method: :delete
+                  -#-else
+                  -#  %li
+                  -#    =link_to 'Sign up', new_registration_path
+                  -#  %li
+                  -#    =link_to 'Sign in', login_path
+                  -#%ul
+                    <!-- Sub Menu items go here -->
+    .container
+      = yield

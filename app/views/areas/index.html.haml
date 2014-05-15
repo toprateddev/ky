@@ -1,0 +1,21 @@
+%h1 Listing categories
+= link_to 'New area', new_area_path, class:'btn btn-success'
+%br
+%br
+%table.table
+  %tr
+    %th Name
+    %th Events count
+    %th
+    %th
+    %th
+  - @areas.each do |area|
+    %tr
+      %td= area.name
+      %td= area.events.count
+      %td
+        = link_to 'Show', area
+      %td
+        = link_to 'Edit', edit_area_path(area)
+      %td
+        = link_to 'Destroy', area, :method => :delete, :data => { :confirm => 'Are you sure?' }

@@ -1,0 +1,45 @@
+@charset "UTF-8";
+/* CSS Document */
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+textarea.title,
+input[type="text"].title,
+input[type="password"].title,
+input[type="datetime"].title,
+input[type="datetime-local"].title,
+input[type="date"].title,
+input[type="month"].title,
+input[type="time"].title,
+input[type="week"].title,
+input[type="number"].title,
+input[type="email"].title,
+input[type="url"].title,
+input[type="search"].title,
+input[type="tel"].title,
+input[type="color"].title,
+.uneditable-input.title {
+    font-size: 42px;
+    line-height: 50px;
+    height: 51px;
+    padding: 10px 5px;
+    text-indent: 0;
+    width:100%;
+}
+
+.ilabel {margin-right:10px;}
+h1 {font-weight:300;}
+
+#action-bar{
+    position:fixed;
+    top:100px;
+    left:25px;
+}
+
+.middle {margin-top:-25px;}
+.logo {font-size:32px; margin-left:15px;}

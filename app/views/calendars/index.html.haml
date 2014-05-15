@@ -1,0 +1,25 @@
+%h1 Listing calendars
+
+= link_to 'New Calendar', new_calendar_path, class:'btn btn-success'
+%br
+%br
+%table.table
+  %tr
+    %th Name
+    %th Events
+    %th
+    %th
+    %th
+  - @calendars.each do |calendar|
+    %tr
+      %td= calendar.name
+      %td= calendar.events.count
+      %td
+        = link_to 'Show', calendar
+      %td
+        = link_to 'Edit', edit_calendar_path(calendar)
+      %td
+        = link_to 'Destroy', calendar, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+
+

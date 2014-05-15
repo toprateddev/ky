@@ -1,0 +1,29 @@
+%h3
+  Category Name:
+  = @category.name
+
+-if @category.subcategories.any?
+  %table.table
+    %thead
+      %th Name
+      %th Subcategories count
+      %th
+      %th
+      %th
+    %tbody
+      - @category.subcategories.each do |category|
+        %tr
+          %td=category.name
+          %td=category.subcategories.count
+          %td
+            = link_to 'Show', category
+          %td
+            = link_to 'Edit', edit_category_path(category)
+          %td
+            = link_to 'Destroy', category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+= link_to 'Edit', edit_category_path(@category), class:'btn btn-success'
+\|
+= link_to 'Back', categories_path, class:'btn btn-success'
+\|
+= link_to 'New Subcategory', new_category_path(@category), class:'btn btn-success'

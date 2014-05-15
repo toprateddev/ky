@@ -1,0 +1,40 @@
+%p#notice= notice
+%p
+  Name:
+  =@event.name
+%p
+  Start at:
+  =@event.start.strftime '%d %B,%Y %H:%M'
+%p
+  End at:
+  =@event.end.strftime '%d %B,%Y %H:%M'
+%p
+  All day:
+  = @event.all_day?
+- unless @event.description.empty?
+  Description:
+  %p
+    = @event.description
+- if @event.location_defined?
+  %p
+    Location
+    = "#{@event.state} #{@event.city} #{@event.address} #{@event.location}"
+- unless @event.link.empty?
+  URL:
+  %p
+    %a{ href: @event.url }=@event.link
+Calendars:
+#calendars
+  - @event.calendars.each do |c|
+    %p
+      =link_to c.name, calendar_path(c)
+Categories:
+#categories
+  - @event.categories.each do |c|
+    %p
+      =link_to c.name, category_path(c)
+
+
+= link_to 'Edit', edit_event_path(@event)
+\|
+= link_to 'Back', events_path

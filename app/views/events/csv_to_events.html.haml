@@ -1,0 +1,52 @@
+=form_tag '/events/upload_csv',method: :post, multipart: true do
+  .row
+    .span3
+      %h4 Assign To Calendars
+      - if current_user.calendars.count > 5
+        %span.offset1.fui-arrow-left#up-arrow-cal
+      .calendars
+        = select_tag 'calendar_id', options_from_collection_for_select(current_user.calendars.asc(:name), 'id', 'name')
+        -# %ul
+        -#   - current_user.calendars.asc(:name).each do |calendar|
+        -#     %li
+        -#       %label.checkbox{for:'csv[calendar_ids][]'}
+        -#         = check_box_tag 'csv[calendar_ids][]', calendar.id, 'data-toggle'=>'checkbox'
+        -#         = calendar.name
+      - if current_user.calendars.count > 5
+        %span.offset1.fui-arrow-right#down-arrow-cal
+  -#  .span3
+  -#    %h4 Choose categories
+  -#    - if current_user.categories.count > 5
+  -#      %span.offset1.fui-arrow-left#up-arrow-cat
+  -#    .categories
+  -#      %ul
+  -#        - current_user.categories.asc(:name).each do |category|
+  -#          %li
+  -#            %label.checkbox{for:'category_ids[]'}
+  -#              = check_box_tag 'csv[category_ids][]', category.id, 'data-toggle'=>'checkbox'
+  -#              = category.name
+  -#    - if current_user.categories.count > 5
+  -#      %span.offset1.fui-arrow-right#down-arrow-cat
+  -#  .span3
+  -#    %h4 Choose Areas
+  -#    - if current_user.areas.count > 5
+  -#      %span.offset1.fui-arrow-left#up-arrow-cal
+  -#    .calendars
+  -#      %ul
+  -#        - current_user.areas.asc(:name).each do |area|
+  -#          %li
+  -#            %label.checkbox{ for:'area_ids[]' }
+  -#              = check_box_tag 'csv[area_ids][]', area.id, 'data-toggle'=>'checkbox'
+  -#              = area.name
+  -#    - if current_user.areas.count > 5
+  -#      %span.offset1.fui-arrow-right#down-arrow-cal
+  .row
+    %input{type:'file', name: 'file'}
+    =submit_tag 'Send', class:'btn btn-success'
+
+//:javascript
+//  $(document).ready(function(){
+//    $('input[type="checkbox"]').removeAttr('checked');
+//  });
+
+

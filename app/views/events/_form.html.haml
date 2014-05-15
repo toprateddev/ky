@@ -1,0 +1,132 @@
+.row
+  .span12
+    = form_for @event,
+     url: event_path(@event),
+     method: @event.persisted? ? 'patch' : 'post' do |f|
+      .row
+        .span9
+          - if @event.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@event.errors.count, 'error')} prohibited this event from being saved:"
+              %ul
+                - @event.errors.full_messages.each do |msg|
+                  %li= msg
+          = f.text_field :name, class:'title flat', placeholder:'Event Title'
+          .row
+            .span3
+              %p Start Date
+              .control-group
+                .input-prepend.input-datepicker
+                  %button.btn{type:'button'}
+                    %span.fui-calendar
+                  = f.text_field :start_at, class: 'datepicker span2', value: @event.start.strftime('%d %B,%Y')
+            .span3
+              %p End Date
+              .control-group
+                .input-prepend.input-datepicker
+                  %button.btn{type:'button'}
+                    %span.fui-calendar
+                  = f.text_field :end_at, class: 'datepicker span2', value: @event.end.strftime('%d %B,%Y')
+            .span3
+              %p Recurring events
+              = f.select_recurring :recurring_type
+          .row
+            .span3
+              %p Start Time
+              = f.text_field :start_at_hours, placeholder: '12', class: 'small flat span1', columns:'2'
+              %span.middle :
+              = f.text_field :start_at_minutes, placeholder: '00', class: 'small flat span1', columns:'2'
+              = f.text_field :start_am_pm, placeholder:'pm', class: 'small flat span1', columns: '2'
+            .span3
+              %p End Time
+              = f.text_field :end_at_hours, placeholder: '12', class: 'small flat span1', columns:'2'
+              %span.middle :
+              = f.text_field :end_at_minutes, placeholder: '00', class: 'small flat span1', columns:'2'
+              = f.text_field :end_am_pm, placeholder:'pm', class: 'small flat span1', columns: '2'
+            .span3
+              %label.checkbox{style:'margin-top:30px;',for:'all_day'}
+                = f.check_box :all_day, 'data-toggle'=>'checkbox'
+                All day event
+        .span3
+          %h4 Assign To Calendars
+          - if current_user.calendars.count > 5
+            %span.offset1.fui-arrow-left#up-arrow-cal
+          .calendars
+            %ul
+              - current_user.calendars.asc(:name).each do |calendar|
+                %li
+                  %label.checkbox{for:'calendar_ids[]'}
+                    = check_box_tag 'event[calendar_ids][]', calendar.id, (@event.calendars.include?(calendar)),
+                      'data-toggle'=>'checkbox'
+                    = calendar.name
+          - if current_user.calendars.count > 5
+            %span.offset1.fui-arrow-right#down-arrow-cal
+      .row
+        .span9
+          = f.text_area :description, rows:'10', placeholder: 'Add event description'
+        .span3
+          %h4 Choose categories
+          - if current_user.categories.count > 5
+            %span.offset1.fui-arrow-left#up-arrow-cat
+          .categories
+            %ul
+              - current_user.categories.asc(:name).each do |category|
+                %li
+                  %label.checkbox{for:'category_ids[]'}
+                    = check_box_tag 'event[category_ids][]', category.id, (@event.categories.include?(category)),
+                      'data-toggle'=>'checkbox'
+                    = category.name
+          - if current_user.categories.count > 5
+            %span.offset1.fui-arrow-right#down-arrow-cat
+      .row
+        .span3
+          .row
+            .span3
+              = f.text_field :location, placeholder:'Location'
+          #location-details
+            .row
+              .span3
+                =f.text_field :address, placeholder:'Address'
+            .row
+              .span3
+                =f.text_field :city, placeholder:'City'
+            .row
+              .span3
+                =f.text_field :state, placeholder:'State'
+            .row
+              .span3
+                =f.text_field :phone, placeholder:'Phone'
+        .span3
+          %i.fui-link.ilabel
+          = f.text_field :link, placeholder:'example.com'
+        .span3
+          %label.checkbox{style:'margin-top:12px;',for:'published'}
+            = f.check_box :published, { 'data-toggle'=>'checkbox' }
+            %div{style:'text-size:20pt'} Published
+        .span3
+          %h4 Choose Areas
+          - if current_user.areas.count > 5
+            %span.offset1.fui-arrow-left#up-arrow-cal
+          .calendars
+            %ul
+              - current_user.areas.asc(:name).each do |area|
+                %li
+                  %label.checkbox{ for:'area_ids[]' }
+                    = check_box_tag 'event[area_ids][]', area.id, (@event.calendars.include?(area)),
+                      'data-toggle'=>'checkbox'
+                    = area.name
+          - if current_user.areas.count > 5
+            %span.offset1.fui-arrow-right#down-arrow-cal
+      .actions
+        =f.submit 'Save', class: 'btn btn-success'
+:javascript
+  is_one_time_event = function(){
+    var result = false;
+      $.each($('.recurring_select > option'),function(i,val){
+        console.log($(val).attr('value'));
+        if($(val).attr('value')=='null')
+          result = true;
+          return;
+      });
+    return result;
+  };

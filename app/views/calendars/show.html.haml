@@ -1,0 +1,8 @@
+%p#notice= notice
+
+#calendar
+= link_to 'Edit', edit_calendar_path(@calendar)
+\|
+= link_to 'Back', calendars_path
+:javascript
+  var calendar_id = "#{@calendar.id}";
